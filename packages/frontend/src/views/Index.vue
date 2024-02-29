@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
+import { jumpMapPage, jumpAboutPage } from '../utils/index.js';
 
 const tabPosition = ref('first');
-const activeTab = ref('summary');
 
 </script>
 
@@ -35,7 +35,7 @@ const activeTab = ref('summary');
                             <el-card shadow="always">
                                 <div class="content-top-card-number">34%</div>
                                 <div style="text-align: center; font-size: 14px;">
-                                    测试覆盖的深圳市人口
+                                    测试覆盖的深圳市地区
                                 </div>
                             </el-card>
                         </el-col>
@@ -57,14 +57,74 @@ const activeTab = ref('summary');
                         </el-radio-group>
                     </el-row>
                 </div>
+                <div class="content-bottom">
+                    <el-row style="margin-bottom: 12px;" :gutter="12">
+                        <el-col :span="12">
+                            <el-card shadow="hover">
+                                <template #header>
+                                    <div class="card-header" style="font-weight: 600;">
+                                        <span>深圳市</span>
+                                    </div>
+                                </template>
+                                <div style="font-size: 14px;">
+                                    待补充 .......
+                                </div>
+                            </el-card>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-card shadow="hover">
+                                <template #header>
+                                    <div class="card-header" style="font-weight: 600;">
+                                        <span>坪山区</span>
+                                        <el-button style="height: 0;" class="button" text
+                                            @click=""
+                                        >
+                                            选择区域
+                                        </el-button>
+                                    </div>
+                                </template>
+                                <div style="font-size: 14px;">
+                                    待补充 .......
+                                </div>
+                            </el-card>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col>
+                            <el-card :span="24" shadow="hover">
+                                <template #header>
+                                    <div class="card-header" style="font-weight: 600;">
+                                        <span>水样分析</span>
+                                    </div>
+                                </template>
+                                <div style="font-size: 14px;">
+                                    <el-row>
+                                        <el-col :span="12">
+                                            待补充 .......
+                                        </el-col>
+                                        <el-col :span="12">
+                                            待补充 .......
+                                        </el-col>
+                                    </el-row>
+                                </div>
+                            </el-card>
+                        </el-col>
+                    </el-row>
+                </div>
                 <div class="content">
                 </div>
             </el-main>
             <el-footer class="footer">
                 Water Surveillance
             </el-footer>
-            <div>
-                
+            <div style="display: flex; justify-content: center;">
+                <el-affix position="bottom" :offset="10">
+                    <el-button-group>
+                        <el-button style="opacity: 0.8;" type="info">首页</el-button>
+                        <el-button style="opacity: 0.8;" @click="jumpMapPage" type="info">区域</el-button>
+                        <el-button style="opacity: 0.8;" @click="jumpAboutPage" type="info">更多信息</el-button>
+                    </el-button-group>
+                </el-affix>
             </div>
         </el-container>
     </div>
@@ -120,8 +180,9 @@ const activeTab = ref('summary');
     padding: 0.5rem;
 }
 
+/* content-top */
 .content-top {
-
+    margin-bottom: 48px;
 }
 
 .content-top-card-number {
@@ -154,6 +215,11 @@ const activeTab = ref('summary');
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+/* content-bottom */
+.content-bottom .card-header {
+    color: #00aeef;
 }
 
 .tabs-group {

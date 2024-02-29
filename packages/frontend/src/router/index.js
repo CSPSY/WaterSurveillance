@@ -11,6 +11,20 @@ const routes = [
             title: '首页'
         }
     },
+    {
+        path: '/map',
+        component: () => import('../views/map_view/Map.vue'),
+        meta: {
+            title: '区域'
+        }
+    },
+    {
+        path: '/about',
+        component: () => import('../views/about_view/About.vue'),
+        meta: {
+            title: '更多信息'
+        }
+    },
 ];
 
 const router = createRouter({
