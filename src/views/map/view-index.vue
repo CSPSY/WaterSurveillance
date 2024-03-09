@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { jumpSummaryPage, jumpAboutPage } from '../../utils/index.js';
 import { getMap } from '../../utils/maputil.js';
 import * as echarts from "echarts";
 
@@ -143,103 +142,29 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="common-layout">
-        <el-container>
-            <el-header style="width: 100%; height: 56px; padding: 0;">
-                <div class="header">
-                    <div class="header-text">
-                        <span class="header-title">深圳市水样监测</span>
-                        <span class="header-banner">Water Surveillance</span>
-                    </div>
-                    <div>
-                        <span>最近更新时间：<br /></span><span style="color: #00aeef;">2024.2.25</span>
-                    </div>
-                </div>
-            </el-header>
-            <el-main class="main">
-                <div
-                    ref="mapSZchart"
-                    class="map"
-                ></div>
-                <!-- 点击区域展示的对话框 -->
-                <el-dialog
-                    v-model="dialogVisible"
-                    title="Tips"
-                    width="500"
-                    :before-close="handleClose"
-                >
-                    <span>This is a message</span>
-                    <template #footer>
-                    <div class="dialog-footer">
-                        <el-button @click="dialogVisible = false">Cancel</el-button>
-                        <el-button type="primary" @click="dialogVisible = false">
-                            Confirm
-                        </el-button>
-                    </div>
-                    </template>
-                </el-dialog>
-            </el-main>
-            <el-footer class="footer">
-                Water Surveillance
-            </el-footer>
-            <div style="display: flex; justify-content: center;">
-                <el-affix position="bottom" :offset="10">
-                    <el-button-group>
-                        <el-button style="opacity: 0.8;" @click="jumpSummaryPage" type="info">首页</el-button>
-                        <el-button style="opacity: 0.8;" type="info">区域</el-button>
-                        <el-button style="opacity: 0.8;" @click="jumpAboutPage" type="info">更多信息</el-button>
-                    </el-button-group>
-                </el-affix>
+    <div class="main">
+        <div ref="mapSZchart" class="map"></div>
+        <!-- 点击区域展示的对话框 -->
+        <el-dialog
+            v-model="dialogVisible"
+            title="Tips"
+            width="500"
+            :before-close="handleClose"
+        >
+            <span>This is a message</span>
+            <template #footer>
+            <div class="dialog-footer">
+                <el-button @click="dialogVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="dialogVisible = false">
+                    Confirm
+                </el-button>
             </div>
-        </el-container>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <style scoped>
-/* header 样式 */
-.header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    background-color: #f7f7f8;
-    padding-left: 14px;
-}
-.header-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-.header-title {
-    font-size: 1.4rem;
-    font-weight: 500;
-    letter-spacing: .1rem;
-    padding: 0 12px 0 0;
-    margin-right: 12px;
-    margin-bottom: 4px;
-}
-.header-banner {
-    padding: 0 12px;
-    background-color: #00aeef;
-    color: #ffffff;
-    font-size: 14px;
-
-    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
-}
-.header-content-top {
-    padding: 0 12px;
-    background-color: #00aeef;
-    color: #ffffff;
-    font-size: 14px;
-
-    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
-}
-.button:last-child {
-    margin-left: auto;
-}
-
 /* main 样式 */
 .main {
     padding: 0.5rem;
@@ -250,12 +175,6 @@ onMounted(() => {
     margin: 0 auto;
     width: 900px;
     height: 600px;
-}
-
-/* footer 样式 */
-.footer {
-    padding: 16px;
-    text-align: center;
 }
 
 .button {

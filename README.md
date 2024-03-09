@@ -1,14 +1,10 @@
-# Water Surveillance
+# 深圳市水样监测网站
 
-深圳市水样监测网站
+前端部分
 
-
-
-## 运行
+## 运行方法
 
 ```
-# 前端
-cd packages/frontend
 npm install
 npm run dev
 ```

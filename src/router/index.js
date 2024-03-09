@@ -6,21 +6,24 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
     {
         path: '/',
-        component: () => import('../views/Index.vue'),
+        name: 'home',
+        component: () => import('../views/view-index.vue'),
         meta: {
             title: '首页'
         }
     },
     {
         path: '/map',
-        component: () => import('../views/map_view/Map.vue'),
+        name: 'map',
+        component: () => import('../views/map/view-index.vue'),
         meta: {
             title: '区域'
         }
     },
     {
         path: '/about',
-        component: () => import('../views/about_view/About.vue'),
+        name: 'about',
+        component: () => import('../views/about/view-index.vue'),
         meta: {
             title: '更多信息'
         }
