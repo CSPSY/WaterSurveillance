@@ -19,5 +19,13 @@ export default defineConfig({
     open: true,
     port: 8080,
     inline: true,
+    // 跨域
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+    }
   },
 })

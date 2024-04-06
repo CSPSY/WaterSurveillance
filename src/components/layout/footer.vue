@@ -37,7 +37,8 @@ const router = useRouter();
 
 /* footer 样式 */
 .footer {
-    padding: 16px;
+    /* padding: 0 16px; */
+    margin-top: 5px;
     text-align: center;
 }
 

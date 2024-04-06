@@ -9,25 +9,25 @@ defineOptions({
         <el-row style="margin-bottom: 14px;">
             <el-col style="padding-right: 6px;" :span="8">
                 <el-card shadow="always">
-                    <div class="content-top-card-number">24%</div>
+                    <div class="content-top-card-number">41</div>
                     <div style="text-align: center; font-size: 14px;">
-                        在 12/50 个地点检测到 SARS-CoV-2
+                        测试覆盖的深圳市出水厂
                     </div>
                 </el-card>
             </el-col>
             <el-col style="padding-left: 3px; padding-right: 3px;" :span="8">
                 <el-card shadow="always">
-                    <div class="content-top-card-number">34%</div>
+                    <div class="content-top-card-number">100%</div>
                     <div style="text-align: center; font-size: 14px;">
-                        测试覆盖的深圳市地区
+                        41 / 41 个出水厂符合标准
                     </div>
                 </el-card>
             </el-col>
             <el-col style="padding-left: 6px;" :span="8">
                 <el-card shadow="always">
-                    <div class="content-top-card-number">Omicron</div>
+                    <div class="content-top-card-number">100%</div>
                     <div style="text-align: center; font-size: 14px;">
-                        JN.1 (~95%)
+                        61 / 61 个管网水符合标准
                     </div>
                 </el-card>
             </el-col>

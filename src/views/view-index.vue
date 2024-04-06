@@ -1,8 +1,35 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ContentTopList from './components/content-top-list.vue';
+import contentBottomList from './components/content-bottom-list.vue';
+import { useWaterList } from '../hooks/useWaterList.js';
+
+const { refreshWaterList } = useWaterList();
 
 const tabPosition = ref('first');
+
+const months = ref(6);
+const chartCityData = ref([]);
+const chartAreaData = ref([]);
+
+const areaName = ref('pingshan');
+
+// 初始化数据 / 获取最近几月水质信息
+const handleGetData = async (val) => {
+    months.value = val;
+    chartCityData.value = await refreshWaterList('shenzhen', months.value);
+    chartAreaData.value = await refreshWaterList(areaName.value, months.value);
+};
+
+// 选择区域，更新区域水质信息
+const changeAreaName = async (name) => {
+    areaName.value = name;
+    chartAreaData.value = await refreshWaterList(areaName.value, months.value);
+};
+
+onMounted(() => {
+    handleGetData(6);
+});
 </script>
 
 <template>
@@ -11,66 +38,17 @@ const tabPosition = ref('first');
             <content-top-list />
             <el-row>
                 <el-radio-group fill="#0097db" class="tabs-group" v-model="tabPosition">
-                    <el-radio-button class="tab" value="first">全部时间</el-radio-button>
-                    <el-radio-button class="tab" value="second">最近 12 个月</el-radio-button>
-                    <el-radio-button class="tab" value="third">最近 6 个月</el-radio-button>
-                    <el-radio-button class="tab" value="forth">最近 6 周</el-radio-button>
+                    <el-radio-button class="tab" value="first" @click="handleGetData(6)">最近 6 个月</el-radio-button>
+                    <el-radio-button class="tab" value="second" @click="handleGetData(9)">最近 9 个月</el-radio-button>
+                    <el-radio-button class="tab" value="third" @click="handleGetData(12)">最近 1 年</el-radio-button>
+                    <el-radio-button class="tab" value="forth" @click="handleGetData(24)">最近 2 年</el-radio-button>
                 </el-radio-group>
             </el-row>
         </div>
         <div class="content-bottom">
-            <el-row style="margin-bottom: 12px;" :gutter="12">
-                <el-col :span="12">
-                    <el-card shadow="hover">
-                        <template #header>
-                            <div class="card-header" style="font-weight: 600;">
-                                <span>深圳市</span>
-                            </div>
-                        </template>
-                        <div style="font-size: 14px;">
-                            待补充 .......
-                        </div>
-                    </el-card>
-                </el-col>
-                <el-col :span="12">
-                    <el-card shadow="hover">
-                        <template #header>
-                            <div class="card-header" style="font-weight: 600;">
-                                <span>坪山区</span>
-                                <el-button style="height: 0;" class="button" text
-                                    @click=""
-                                >
-                                    选择区域
-                                </el-button>
-                            </div>
-                        </template>
-                        <div style="font-size: 14px;">
-                            待补充 .......
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col>
-                    <el-card :span="24" shadow="hover">
-                        <template #header>
-                            <div class="card-header" style="font-weight: 600;">
-                                <span>水样分析</span>
-                            </div>
-                        </template>
-                        <div style="font-size: 14px;">
-                            <el-row>
-                                <el-col :span="12">
-                                    待补充 .......
-                                </el-col>
-                                <el-col :span="12">
-                                    待补充 .......
-                                </el-col>
-                            </el-row>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
+            <content-bottom-list
+                :city-data="chartCityData" :area-data="chartAreaData" :area-name="areaName" @changeArea="changeAreaName"
+            />
         </div>
     </div>
 </template>
@@ -139,6 +117,10 @@ const tabPosition = ref('first');
     background-color: #8e8e93;
     outline: none;
     border: none;
+}
+
+.el-dropdown-link:focus {
+    outline: none;
 }
 
 .button {
