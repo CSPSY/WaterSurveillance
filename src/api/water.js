@@ -5,5 +5,9 @@ import API from "./base.js";
 
 // 获取水样数据
 export const getWaterDataDistrict = (params) => {
-    return API.get('/water/data/district', { params })
+    return API.get('/water/data/district', { params });
+};
+
+export const getWaterDataFactory = (params) => {
+    return API.get('/water/data/factory', { params });
 };

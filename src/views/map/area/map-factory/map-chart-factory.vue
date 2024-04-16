@@ -3,7 +3,7 @@ import { ref, onMounted, onBeforeUnmount, markRaw, watch, nextTick } from 'vue';
 import * as echarts from 'echarts';
 
 defineOptions({
-    name: 'MapChartArea'
+    name: 'MapChartFactory'
 });
 
 // 定义组件的 props
@@ -124,7 +124,7 @@ onBeforeUnmount(() => {
 .line-chart {
     /* width: 100%; */
     /* height: 100%; */
-    width: 668px;
-    height: 320px;
+    width: 510px;
+    height: 340px;
 }
 </style>
