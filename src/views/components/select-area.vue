@@ -1,5 +1,5 @@
 <script setup>
-import { areaNameMap, areaNameMapToE } from '../../utils/areaName.js';
+import { areaNameMap } from '../../utils/areaName.js';
 
 defineOptions({
     name: 'SelectArea'
@@ -11,14 +11,14 @@ const emit = defineEmits(['changeArea']);
 </script>
 
 <template>
-    <span>{{ areaNameMap.get(props.areaName) }}</span>
+    <span>{{ props.areaName }}</span>
     <el-dropdown max-height="200">
         <span class="el-dropdown-link">选择区域</span>
         <template #dropdown>
             <el-dropdown-menu class="dropdown-menu">
                 <el-dropdown-item
                     v-for="(value, key) in areaNameMap.values()" :key="value"
-                    @click="emit('changeArea', areaNameMapToE.get(value))"
+                    @click="emit('changeArea', value)"
                 >{{ value }}</el-dropdown-item>
             </el-dropdown-menu>
         </template>

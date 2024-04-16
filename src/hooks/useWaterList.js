@@ -2,7 +2,7 @@
  * @description 区域信息 hooks
  */
 import { reactive, ref } from "vue";
-import { getWaterData } from '../api/water.js';
+import { getWaterDataDistrict } from '../api/water.js';
 
 export const useWaterList = () => {
 
@@ -11,7 +11,7 @@ export const useWaterList = () => {
         const params = { name, months };
         let resList = [];
 
-        await getWaterData(params).then(res => {
+        await getWaterDataDistrict(params).then(res => {
             resList = res.data.data;
         }).catch(err => {
             resList = [];

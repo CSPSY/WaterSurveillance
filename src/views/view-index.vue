@@ -12,12 +12,12 @@ const months = ref(6);
 const chartCityData = ref([]);
 const chartAreaData = ref([]);
 
-const areaName = ref('pingshan');
+const areaName = ref('坪山区');
 
 // 初始化数据 / 获取最近几月水质信息
 const handleGetData = async (val) => {
     months.value = val;
-    chartCityData.value = await refreshWaterList('shenzhen', months.value);
+    chartCityData.value = await refreshWaterList('深圳市', months.value);
     chartAreaData.value = await refreshWaterList(areaName.value, months.value);
 };
 

@@ -4,7 +4,6 @@ import { getMap } from '../../../utils/maputil.js';
 import * as echarts from "echarts";
 import mapAreaDetailDialog from './components/map-area-detail-dialog.vue';
 import { useWaterList } from '../../../hooks/useWaterList';
-import { areaNameMapToE } from '../../../utils/areaName';
 
 const { refreshWaterList } = useWaterList();
 
@@ -131,7 +130,7 @@ const initMap = () => {
 
     chart.value.on("click", async ({ name }) => {
         areaName.value = name;
-        await getAreaData(areaNameMapToE.get(name), 24);
+        await getAreaData(name, 24);
         detailDialogVisible.value = true;
     });
 };

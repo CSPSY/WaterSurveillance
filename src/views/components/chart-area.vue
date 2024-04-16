@@ -59,9 +59,11 @@ const updateChart = () => {
         yAxis: [
             {
                 type: 'value',
+                name: '游离氯值'
             },
             {
                 type: 'value',
+                name: 'ph值'
             }
         ],
         series: [
@@ -80,12 +82,12 @@ const updateChart = () => {
             {
                 name: '浑浊度（NTU）',
                 type: 'line',
-                data: props.data.map(item => item.turbidity),
+                data: props.data.map(item => '~' + item.turbidity),
             },
             {
                 name: '铂钴色度',
                 type: 'line',
-                data: props.data.map(item => item.platinum_cobalt_color),
+                data: props.data.map(item => '~' + item.platinum_cobalt_color),
             },
         ],
     };
