@@ -32,7 +32,7 @@ export const factoryPoints = [
     { name: '深圳水务集团盐田水质净化厂', location: { lng: 113.817564, lat: 22.690426 }, show: false, areaName: '宝安区' },
     { name: '松岗水质净化厂', location: { lng: 113.817564, lat: 22.690426 }, show: false, areaName: '宝安区' },
     // 龙华区
-    { name: '观澜水质净化厂', location: { lng: 113.817564, lat: 22.690426 }, show: false, areaName: '龙华区' },
+    { name: '观澜水质净化厂', location: { lng: 114.073987, lat: 22.73576 }, show: false, areaName: '龙华区' },
     // 龙岗区
     { name: '龙城水厂', location: { lng: 114.228977, lat: 22.69339 }, show: false, areaName: '龙岗区' },
     { name: '深圳龙岗水务集团仔岭水厂', location: { lng: 114.266847, lat: 22.748822 }, show: false, areaName: '龙岗区' },
