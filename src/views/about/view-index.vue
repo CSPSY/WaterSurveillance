@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import CardInfo from './components/card-info.vue';
 
 </script>
 
@@ -12,75 +13,19 @@ import { ref } from 'vue';
                         <span>更多信息</span>
                     </div>
                 </template>
-                <div style="font-size: 14px;">
-                    待补充 .......
-                </div>
+                <card-info />
             </el-card>
         </div>
     </div>
 </template>
 
 <style scoped>
-/* header 样式 */
-.header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    background-color: #f7f7f8;
-    padding-left: 14px;
+.content .item {
+    margin-bottom: 12px;
+    white-space: pre;
 }
-.header-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-.header-title {
-    font-size: 1.4rem;
-    font-weight: 500;
-    letter-spacing: .1rem;
-    padding: 0 12px 0 0;
-    margin-right: 12px;
-    margin-bottom: 4px;
-}
-.header-banner {
-    padding: 0 12px;
-    background-color: #00aeef;
-    color: #ffffff;
-    font-size: 14px;
-
-    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
-}
-.header-content-top {
-    padding: 0 12px;
-    background-color: #00aeef;
-    color: #ffffff;
-    font-size: 14px;
-
-    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
-}
-.button:last-child {
-    margin-left: auto;
-}
-
-/* main 样式 */
-.main {
-    padding: 0.5rem;
-}
-
-/* footer 样式 */
-.footer {
-    padding: 16px;
-    text-align: center;
-}
-
-.button {
-    color: black;
-}
-.button:focus,
-.button:hover {
-    color: #0052d9;
+.title-small {
+    font-weight: 550;
+    opacity: .9;
 }
 </style>
