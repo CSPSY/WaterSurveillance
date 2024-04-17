@@ -2,32 +2,63 @@
  * @description 路由配置
  */
 import { createRouter, createWebHistory } from "vue-router";
+import { useGlobalStore } from '@/stores/store.js';
 
 const routes = [
     {
         path: '/',
         name: 'home',
-        component: () => import('../views/view-index.vue'),
+        component: () => import('@/views/view-index.vue'),
         meta: {
-            title: '首页'
+            title: '首页',
+            isAdmin: false
         }
     },
     {
         path: '/map',
         name: 'map',
-        component: () => import('../views/map/view-index.vue'),
+        component: () => import('@/views/map/view-index.vue'),
         meta: {
-            title: '区域'
+            title: '区域',
+            isAdmin: false
         }
     },
     {
         path: '/about',
         name: 'about',
-        component: () => import('../views/about/view-index.vue'),
+        component: () => import('@/views/about/view-index.vue'),
         meta: {
-            title: '更多信息'
+            title: '更多信息',
+            isAdmin: false
         }
     },
+    {
+        path: '/admin',
+        redirect: '/admin/water',
+        name: 'admin-index',
+        meta: {
+            title: '后台管理',
+            isAdmin: true
+        },
+    },
+    {
+        path: '/admin/water',
+        name: 'admin-water',
+        component: () => import('@/views/admin/water/view-index.vue'),
+        meta: {
+            title: '水样信息管理',
+            isAdmin: true
+        }
+    },
+    {
+        path: '/admin/auth',
+        name: 'admin-auth',
+        component: () => import('@/views/admin/auth/view-index.vue'),
+        meta: {
+            title: '权限管理',
+            isAdmin: true
+        }
+    }
 ];
 
 const router = createRouter({
@@ -36,6 +67,14 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    const { menuStore, userStore } = useGlobalStore();
+
+    if (to.meta.isAdmin) {
+        menuStore.setShowValue(true);
+    } else {
+        menuStore.setShowValue(false);
+    }
+
     // 路由发送变化时，更改页面 title
     if (to.meta.title) {
         document.title = '水样监测 | ' + to.meta.title

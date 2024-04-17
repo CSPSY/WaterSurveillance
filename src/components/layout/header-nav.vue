@@ -1,7 +1,11 @@
 <script setup>
+import { useGlobalStore } from '@/stores/store';
+
 defineOptions({
     name: 'HeaderNav'
 });
+
+const { menuStore } = useGlobalStore();
 </script>
 
 <template>
@@ -11,7 +15,7 @@ defineOptions({
                 <span class="header-title">深圳市水样监测</span>
                 <span class="header-banner">Water Surveillance</span>
             </div>
-            <div>
+            <div v-show="!menuStore.show">
                 <span>最近更新时间：<br /></span><span style="color: #00aeef;">2024.2.25</span>
             </div>
         </div>
