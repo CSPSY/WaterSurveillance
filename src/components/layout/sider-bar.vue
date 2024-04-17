@@ -1,31 +1,30 @@
 <script setup>
 import { Document, User } from '@element-plus/icons-vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 defineOptions({
     name: 'SiderBar'
 });
 
+const route = useRoute();
 const router = useRouter();
-const routerMap = ['/admin', '/admin/auth'];
 
 const handleSelect = (index, indexPath) => {
-  console.log(index, indexPath);
-  router.push(routerMap[index]);
+  router.push(index);
 };
 </script>
 
 <template>
     <el-menu
-        default-active="0"
+        :default-active="route.path"
         @select="handleSelect"
         class="sider"
     >
-        <el-menu-item index="0">
+        <el-menu-item index="/admin/water">
             <el-icon><document /></el-icon>
             <span>水样信息管理</span>
         </el-menu-item>
-        <el-menu-item index="1">
+        <el-menu-item index="/admin/auth">
             <el-icon><user /></el-icon>
             <span>权限管理</span>
         </el-menu-item>

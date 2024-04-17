@@ -1,31 +1,36 @@
 <script setup>
+defineOptions({
+    name: 'FactoryTable'
+});
 </script>
 
 <template>
-    <div class="main-container">
-        <div class="main-top">
-            <label for="account-info">用户名：</label>
+    <div class="factory-table">
+        <div class="table-top">
+            <label for="account-info">水厂名：</label>
             <el-input
                 id="account-info"
                 style="height: 32px; width: 212px; padding: 0 22px 0 0;"
-                placeholder="请输入用户名"
+                placeholder="请输入水厂名"
             />
             <el-button class="button" @click="">搜索</el-button>
-            <el-button class="button" @click="">添加用户</el-button>
         </div>
-        <div class="main-bottom">
+        <div class="table-bottom">
             <el-table
                 ref=""
                 :data="[]"
                 :border="true"
-                style="width: 1080px"
+                style="width: 1310px"
             >
-            <el-table-column property="id" label="用户 ID" width="190" />
-            <el-table-column property="accountInfo" label="用户名" width="120" />
-            <el-table-column property="fullName" label="姓名" width="110" />
-            <el-table-column property="userRole" label="用户角色" width="120" />
-            <el-table-column property="phoneNumber" label="电话号码" width="140" />
-            <el-table-column property="email" label="邮箱" width="280" />
+            <el-table-column property="id" label="水厂名" width="230" />
+            <el-table-column property="id" label="所属地区" width="120" />
+            <el-table-column property="accountInfo" label="时间" width="120" />
+            <el-table-column property="fullName" label="游离氯" width="120" />
+            <el-table-column property="userRole" label="ph值" width="120" />
+            <el-table-column property="phoneNumber" label="浑浊度" width="120" />
+            <el-table-column property="email" label="铂钴色度" width="120" />
+            <el-table-column property="email" label="总大肠菌群" width="120" />
+            <el-table-column property="email" label="菌落总数" width="120" />
             <el-table-column label="操作" width="120">
                 <template v-slot="scope" #default>
                 <el-button link type="primary" size="small" @click="editUserCard(scope.row)">编辑</el-button>
@@ -49,18 +54,12 @@
 </template>
 
 <style scoped>
-.main-container {
-    background-color: #fff;
-    width: 100%;
-    padding: 16px;
-}
-.main-top {
+.table-top {
   margin: 25px 0 0 55px;
-  display: flex;
   
   align-items: center;
 }
-.main-bottom {
+.table-bottom {
   margin: 25px 0 0 32px;
 }
 .button:focus:not(.button:hover) {
