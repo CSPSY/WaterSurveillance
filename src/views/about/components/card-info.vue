@@ -1,5 +1,5 @@
 <script setup>
-import { moreInfo } from '../../../utils/aboutInfo.js';
+import { moreInfo } from '@/utils/aboutInfo.js';
 
 defineOptions({
     name: 'CardInfo'

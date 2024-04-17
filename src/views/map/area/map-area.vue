@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getMap } from '../../../utils/maputil.js';
+import { getMap } from '@/utils/maputil.js';
 import * as echarts from "echarts";
 import mapAreaDetailDialog from './components/map-area-detail-dialog.vue';
-import { useWaterList } from '../../../hooks/useWaterList';
+import { useWaterList } from '@/hooks/useWaterList';
 
 const { refreshWaterList } = useWaterList();
 

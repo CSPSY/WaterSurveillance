@@ -1,5 +1,5 @@
 <script setup>
-import { areaNameMap } from '../../utils/areaName.js';
+import { areaNameMap } from '@/utils/areaName.js';
 
 defineOptions({
     name: 'SelectArea'

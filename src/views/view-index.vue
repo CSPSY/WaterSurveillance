@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import ContentTopList from './components/content-top-list.vue';
 import contentBottomList from './components/content-bottom-list.vue';
-import { useWaterList } from '../hooks/useWaterList.js';
+import { useWaterList } from '@/hooks/useWaterList.js';
 
 const { refreshWaterList } = useWaterList();
 

@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted, nextTick, ref } from 'vue';
 import { BaiduMap, BmBoundary, BmMarker, BmInfoWindow } from 'vue-baidu-map-3x';
-import { ENV } from '../../../../utils/env.js';
-import { areaPoint, factoryPoints } from '../../../../utils/point.js';
+import { ENV } from '@/utils/env.js';
+import { areaPoint, factoryPoints } from '@/utils/point.js';
 import MapChartFactory from './map-chart-factory.vue';
-import { useWaterList } from '../../../../hooks/useWaterList';
+import { useWaterList } from '@/hooks/useWaterList';
 
 const { refreshWaterFactoryList } = useWaterList();
 
