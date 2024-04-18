@@ -82,8 +82,13 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
     const { menuStore, userStore } = useGlobalStore();
+
+    // 路由守卫鉴权
+    if (to.meta.needAuth && !userStore.isLogin) {
+        return { name: 'admin-login' };
+    }
 
     if (to.meta.isAdmin) {
         menuStore.setShowValue(true);
@@ -95,7 +100,6 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = '水样监测 | ' + to.meta.title
     }
-    next()
 });
 
 export { router };
