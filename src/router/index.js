@@ -11,7 +11,8 @@ const routes = [
         component: () => import('@/views/view-index.vue'),
         meta: {
             title: '首页',
-            isAdmin: false
+            isAdmin: false,
+            needAuth: false
         }
     },
     {
@@ -20,7 +21,8 @@ const routes = [
         component: () => import('@/views/map/view-index.vue'),
         meta: {
             title: '区域',
-            isAdmin: false
+            isAdmin: false,
+            needAuth: false
         }
     },
     {
@@ -29,7 +31,18 @@ const routes = [
         component: () => import('@/views/about/view-index.vue'),
         meta: {
             title: '更多信息',
-            isAdmin: false
+            isAdmin: false,
+            needAuth: false
+        }
+    },
+    {
+        path: '/admin/login',
+        name: 'admin-login',
+        component: () => import('@/views/admin/login/view-index.vue'),
+        meta: {
+            title: '后台管理登录',
+            isAdmin: false,
+            needAuth: false
         }
     },
     {
@@ -38,7 +51,8 @@ const routes = [
         name: 'admin-index',
         meta: {
             title: '后台管理',
-            isAdmin: true
+            isAdmin: true,
+            needAuth: true
         },
     },
     {
@@ -47,7 +61,8 @@ const routes = [
         component: () => import('@/views/admin/water/view-index.vue'),
         meta: {
             title: '水样信息管理',
-            isAdmin: true
+            isAdmin: true,
+            needAuth: true
         }
     },
     {
@@ -56,7 +71,8 @@ const routes = [
         component: () => import('@/views/admin/auth/view-index.vue'),
         meta: {
             title: '权限管理',
-            isAdmin: true
+            isAdmin: true,
+            needAuth: true
         }
     }
 ];
