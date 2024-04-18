@@ -11,3 +11,19 @@ export const getWaterDataDistrict = (params) => {
 export const getWaterDataFactory = (params) => {
     return API.get('/water/data/factory', { params });
 };
+
+export const getWaterAreaList = (page, size, search) => {
+    return API.get('/water/area-list', {
+        params: {
+            page, size, search
+        }
+    });
+};
+
+export const getWaterFactoryList = (page, size, search) => {
+    return API.get('/water/factory-list', {
+        params: {
+            page, size, search
+        }
+    });
+};

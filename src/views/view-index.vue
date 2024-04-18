@@ -4,7 +4,7 @@ import ContentTopList from './components/content-top-list.vue';
 import contentBottomList from './components/content-bottom-list.vue';
 import { useWaterList } from '@/hooks/useWaterList.js';
 
-const { refreshWaterList } = useWaterList();
+const { refreshWaterAreaList } = useWaterList();
 
 const tabPosition = ref('first');
 
@@ -17,14 +17,14 @@ const areaName = ref('坪山区');
 // 初始化数据 / 获取最近几月水质信息
 const handleGetData = async (val) => {
     months.value = val;
-    chartCityData.value = await refreshWaterList('深圳市', months.value);
-    chartAreaData.value = await refreshWaterList(areaName.value, months.value);
+    chartCityData.value = await refreshWaterAreaList('深圳市', months.value);
+    chartAreaData.value = await refreshWaterAreaList(areaName.value, months.value);
 };
 
 // 选择区域，更新区域水质信息
 const changeAreaName = async (name) => {
     areaName.value = name;
-    chartAreaData.value = await refreshWaterList(areaName.value, months.value);
+    chartAreaData.value = await refreshWaterAreaList(areaName.value, months.value);
 };
 
 onMounted(() => {

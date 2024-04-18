@@ -5,7 +5,7 @@ import * as echarts from "echarts";
 import mapAreaDetailDialog from './components/map-area-detail-dialog.vue';
 import { useWaterList } from '@/hooks/useWaterList';
 
-const { refreshWaterList } = useWaterList();
+const { refreshWaterAreaList } = useWaterList();
 
 defineOptions({
     name: 'MapArea'
@@ -18,7 +18,7 @@ const areaData = ref([]);
 
 // 初始化区域水质数据信息
 const getAreaData = async (name, months) => {
-    areaData.value = await refreshWaterList(name, months);
+    areaData.value = await refreshWaterAreaList(name, months);
 };
 
 // 地图绘制
