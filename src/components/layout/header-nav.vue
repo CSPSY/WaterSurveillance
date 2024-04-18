@@ -4,6 +4,7 @@ import { useGlobalStore } from '@/stores/store.js';
 import UserLogin from '../user/user-login.vue';
 import UserMeta from '../user/user-meta.vue';
 import { User }  from '@element-plus/icons-vue';
+import { useRouter } from 'vue-router';
 
 defineOptions({
     name: 'HeaderNav'
@@ -11,6 +12,7 @@ defineOptions({
 
 const { menuStore, userStore } = useGlobalStore();
 const popoverRef = ref();
+const router = useRouter();
 
 watch(
     () => userStore.isLogin,
@@ -20,13 +22,17 @@ watch(
         }
     },
 );
+
+const jumpToIndex = () => {
+    router.push('/');
+};
 </script>
 
 <template>
     <div style="width: 100%; height: 56px; padding: 0;">
         <div class="banner">
             <section class="header">
-                <div class="header-text">
+                <div class="header-text" @click="jumpToIndex">
                     <span class="header-title">深圳市水样监测</span>
                     <span class="header-banner">Water Surveillance</span>
                 </div>
@@ -73,6 +79,9 @@ watch(
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+.header-text:hover {
+    cursor: pointer;
 }
 .header-title {
     font-size: 1.4rem;

@@ -2,6 +2,7 @@
  * @description 路由配置
  */
 import { createRouter, createWebHistory } from "vue-router";
+import { getUserInfo } from '@/api/user.js';
 import { useGlobalStore } from '@/stores/store.js';
 
 const routes = [
@@ -82,10 +83,22 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
     const { menuStore, userStore } = useGlobalStore();
 
     // 路由守卫鉴权
+    if (localStorage.getItem('WSV_TOKEN')) {
+        await getUserInfo().then((res) => {
+            if (res.data.errno !== 0) {
+                throw new Error(res.data.message);
+            }
+            userStore.login({
+                ...res.data?.data?.user
+            });
+        }).catch(err => {
+            ElMessage.error(err.message);
+        });
+    }
     if (to.meta.needAuth && !userStore.isLogin) {
         return { name: 'admin-login' };
     }
@@ -95,7 +108,6 @@ router.beforeEach((to, from) => {
     } else {
         menuStore.setShowValue(false);
     }
-
     // 路由发送变化时，更改页面 title
     if (to.meta.title) {
         document.title = '水样监测 | ' + to.meta.title
