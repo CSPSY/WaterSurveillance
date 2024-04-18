@@ -2,7 +2,7 @@
  * @description 区域信息 hooks
  */
 import { reactive, ref } from "vue";
-import { getWaterDataDistrict, getWaterDataFactory } from '../api/water.js';
+import { getWaterDataDistrict, getWaterDataFactory } from '@/api/water.js';
 
 export const useWaterList = () => {
 

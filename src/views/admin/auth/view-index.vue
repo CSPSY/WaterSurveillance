@@ -1,4 +1,20 @@
 <script setup>
+import { onMounted } from 'vue';
+import { useUserList } from '@/hooks/useUserList.js';
+import { userRole } from '@/utils/user.js';
+
+const {
+    userList: userData, userPagination, userSearchText,
+    refreshUserList, onPageChange, handleSearch,
+} = useUserList();
+
+onMounted(() => {
+    refreshUserList();
+});
+
+const formatterRole = (row) => {
+    return userRole[row.role];
+};
 </script>
 
 <template>
@@ -7,43 +23,39 @@
             <label for="account-info">用户名：</label>
             <el-input
                 id="account-info"
+                v-model="userSearchText"
                 style="height: 32px; width: 212px; padding: 0 22px 0 0;"
                 placeholder="请输入用户名"
             />
-            <el-button class="button" @click="">搜索</el-button>
+            <el-button class="button" @click="handleSearch">搜索</el-button>
             <el-button class="button" @click="">添加用户</el-button>
         </div>
         <div class="main-bottom">
-            <el-table
-                ref=""
-                :data="[]"
-                :border="true"
-                style="width: 1080px"
-            >
-            <el-table-column property="id" label="用户 ID" width="190" />
-            <el-table-column property="accountInfo" label="用户名" width="120" />
-            <el-table-column property="fullName" label="姓名" width="110" />
-            <el-table-column property="userRole" label="用户角色" width="120" />
-            <el-table-column property="phoneNumber" label="电话号码" width="140" />
-            <el-table-column property="email" label="邮箱" width="280" />
-            <el-table-column label="操作" width="120">
-                <template v-slot="scope" #default>
-                <el-button link type="primary" size="small" @click="editUserCard(scope.row)">编辑</el-button>
-                <el-popconfirm title="确认要删除该用户吗 ？" @confirm="deleteUserById(scope.row.id)">
-                    <template #reference>
-                        <el-button link type="primary" size="small" @click="">删除</el-button>
+            <el-table :data="userData" :border="true" style="width: 1080px; margin-bottom: 12px;">
+                <el-table-column property="id" label="用户 ID" width="170" />
+                <el-table-column property="username" label="用户名" width="130" />
+                <el-table-column property="realname" label="姓名" width="120" />
+                <el-table-column property="role" label="用户角色" width="120" :formatter="formatterRole" />
+                <el-table-column property="telephone" label="电话号码" width="140" />
+                <el-table-column property="email" label="邮箱" width="280" />
+                <el-table-column label="操作" width="120">
+                    <template v-slot="scope" #default>
+                    <el-button link type="primary" size="small" @click="editUserCard(scope.row)">编辑</el-button>
+                    <el-popconfirm title="确认要删除该用户吗 ？" @confirm="deleteUserById(scope.row.id)">
+                        <template #reference>
+                            <el-button link type="danger" size="small" @click="">删除</el-button>
+                        </template>
+                    </el-popconfirm>
                     </template>
-                </el-popconfirm>
-                </template>
-            </el-table-column>
+                </el-table-column>
             </el-table>
-            <!-- <el-pagination
-                style="position: absolute; bottom: 5%; left: 41%;"
-                layout="total, prev, pager, next, jumper" :total="data.total"
-                :page-size="pageInfo.size"
-                v-model:current-page="pageInfo.currentPage"
-                @current-change="changeData()"
-            /> -->
+            <el-pagination
+                layout="total, prev, pager, next, jumper"
+                :total="userPagination.total"
+                :page-size="userPagination.size"
+                v-model:current-page="userPagination.current"
+                @current-change="onPageChange"
+            />
         </div>
     </div>
 </template>
