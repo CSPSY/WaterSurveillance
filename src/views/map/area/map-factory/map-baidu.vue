@@ -14,6 +14,7 @@ defineOptions({
 
 const props = defineProps(['name', 'initalName']);
 const points = ref([]);
+const area = ref('');
 
 const waterFactoryDatas = ref([]);
 const getWaterFactoryDatas = async (name, months) => {
@@ -23,6 +24,7 @@ const getWaterFactoryDatas = async (name, months) => {
 const infoWindow = ref(null);
 
 onMounted(() => {
+    area.value = props.name === '光明区' ? props.name : '深圳市 ' + props.name;
     points.value = factoryPoints.filter(item => item.areaName === props.initalName);
 });
 
@@ -47,7 +49,7 @@ const closePointInfo = (index) => {
         :ak="ENV.MAP_AK" v="3.0" type="API" :map-click="false"
         :center="areaPoint[props.name]" :zoom="12" :scroll-wheel-zoom="true"
     >
-        <bm-boundary :name="'深圳市 '+props.name" :strokeWeight="3" strokeColor="blue" :fillOpacity="0.3"></bm-boundary>
+        <bm-boundary :name="area" :strokeWeight="3" strokeColor="blue" :fillOpacity="0.3"></bm-boundary>
         <div style="overflow: visible;" class="point" v-for="(item, index) in points" :key="item.name">
             <bm-marker :position="item.location" :dragging="false" @click="openPointInfo(index)">
                 <bm-info-window ref="infoWindow" :title="points[index].name" :width="545" :height="355" :show="item.show" @close="closePointInfo(index)">

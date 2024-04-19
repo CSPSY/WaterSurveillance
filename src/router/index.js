@@ -87,7 +87,7 @@ router.beforeEach(async (to, from) => {
     const { menuStore, userStore } = useGlobalStore();
 
     // 路由守卫鉴权
-    if (localStorage.getItem('WSV_TOKEN')) {
+    if (to.meta.isAdmin && localStorage.getItem('WSV_TOKEN')) {
         await getUserInfo().then((res) => {
             if (res.data.errno !== 0) {
                 throw new Error(res.data.message);
