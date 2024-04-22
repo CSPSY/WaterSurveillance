@@ -1,6 +1,7 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useFactoryWaterList } from '@/hooks/useFactoryWaterList.js';
+import FactoryEditDialog from './factory-edit-dialog.vue';
 
 const {
     factoryList: factoryData, factoryPagination, factorySearchText,
@@ -14,6 +15,19 @@ defineOptions({
 onMounted(() => {
     refreshFactoryList();
 });
+
+const editDialogVisible = ref(false);
+const editDialogData = ref(null);
+
+// 编辑框显示
+const showEditDialog = (data) => {
+    editDialogData.value = data;
+    editDialogVisible.value = true;
+};
+
+const closeEditDialog = () => {
+    editDialogVisible.value = false;
+};
 </script>
 
 <template>
@@ -25,8 +39,8 @@ onMounted(() => {
         </div>
         <div class="table-bottom">
             <el-table :data="factoryData" :border="true" style="width: 1310px; margin-bottom: 12px;">
-            <el-table-column property="name" label="水厂名" width="230" />
-            <el-table-column property="district" label="所属地区" width="120" />
+            <el-table-column property="name" label="水厂名" width="240" />
+            <el-table-column property="district" label="所属地区" width="110" />
             <el-table-column property="month" label="时间" width="120" />
             <el-table-column property="free_chlorine" label="游离氯" width="120" />
             <el-table-column property="ph_value" label="ph值" width="120" />
@@ -36,12 +50,12 @@ onMounted(() => {
             <el-table-column property="total_bacteria" label="菌落总数" width="120" />
             <el-table-column label="操作" width="120">
                 <template v-slot="scope" #default>
-                <el-button link type="primary" size="small" @click="editUserCard(scope.row)">编辑</el-button>
-                <el-popconfirm title="确认要删除该用户吗 ？" @confirm="deleteUserById(scope.row.id)">
-                    <template #reference>
-                        <el-button link type="danger" size="small" @click="">删除</el-button>
-                    </template>
-                </el-popconfirm>
+                    <el-button link type="primary" size="small" @click="showEditDialog(scope.row)">编辑</el-button>
+                    <el-popconfirm title="确认要删除该用户吗 ？" @confirm="deleteUserById(scope.row.id)">
+                        <template #reference>
+                            <el-button link type="danger" size="small" @click="">删除</el-button>
+                        </template>
+                    </el-popconfirm>
                 </template>
             </el-table-column>
             </el-table>
@@ -52,6 +66,7 @@ onMounted(() => {
                 v-model:current-page="factoryPagination.current"
                 @current-change="onPageChange"
             />
+            <factory-edit-dialog v-if="editDialogVisible" :visible="editDialogVisible" :data="editDialogData" @close="closeEditDialog" />
         </div>
     </div>
 </template>
