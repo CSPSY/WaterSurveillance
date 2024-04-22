@@ -61,48 +61,44 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <el-dialog v-model="props.visible" @close="handleClose" :title="actionText" width="600" align-center>
-        <el-form :model="userInfo" :rules="formRules" ref="formRef">
-        <el-row :gutter="8">
-            <el-col :span="9">
-                <el-form-item prop="username" label="用户名">
-                    <el-input v-model="userInfo.username" placeholder="用户名" clearable :disabled="!props.isEdit"/>
-                </el-form-item>
-            </el-col>
-            <el-col :span="6">
-                <el-form-item prop="realname" label="姓名">
-                    <el-input v-model="userInfo.realname" placeholder="姓名" clearable :disabled="!props.isEdit"/>
-                </el-form-item>
-            </el-col>
-            <el-col :span="9">
-                <el-form-item prop="role" label="用户角色">
-                    <el-select v-model=userInfo.role placeholder="请选择用户角色" :disabled="!props.isEdit">
-                        <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-col>
-        </el-row>
-        <el-row :gutter="8">
-            <el-col :span="9">
-                <el-form-item prop="telephone" label="电话号码">
-                    <el-input v-model="userInfo.telephone" placeholder="电话号码" clearable :disabled="!props.isEdit"/>
-                </el-form-item>
-            </el-col>
-            <el-col :span="12">
-                <el-form-item prop="email" label="邮箱">
-                    <el-input v-model="userInfo.email" placeholder="邮箱" clearable :disabled="!props.isEdit"/>
-                </el-form-item>
-            </el-col>
-        </el-row>
-        <el-row v-show="props.isEdit" justify="end">
-            <el-form-item>
-                <el-button type="primary">确认</el-button>
-            </el-form-item>
-        </el-row>
-        </el-form>
-        <el-card >
-            {{ props.data }}
+    <el-dialog v-model="props.visible" @close="handleClose" :title="actionText" width="620" align-center>
+        <el-card style="margin-bottom: 12px;" shadow="hover">
+            <el-form :model="userInfo" :rules="formRules" ref="formRef">
+                <el-row :gutter="8">
+                    <el-col :span="9">
+                        <el-form-item prop="username" label="用户名">
+                            <el-input v-model="userInfo.username" placeholder="用户名" clearable :readonly="!props.isEdit"/>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item prop="realname" label="姓名">
+                            <el-input v-model="userInfo.realname" placeholder="姓名" clearable :readonly="!props.isEdit"/>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="9">
+                        <el-form-item prop="role" label="用户角色">
+                            <el-select v-if="props.isEdit" v-model=userInfo.role placeholder="请选择用户角色">
+                                <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                            </el-select>
+                            <el-input v-else :placeholder="userInfo.role ? '管理员' : '超级管理员'" clearable :readonly="!props.isEdit"/>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row style="height: 32px;" :gutter="8">
+                    <el-col :span="9">
+                        <el-form-item prop="telephone" label="电话号码">
+                            <el-input v-model="userInfo.telephone" placeholder="电话号码" clearable :readonly="!props.isEdit"/>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item prop="email" label="邮箱">
+                            <el-input v-model="userInfo.email" placeholder="邮箱" clearable :readonly="!props.isEdit"/>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
         </el-card>
+        <el-button style="float: right;" type="primary">确认</el-button>
     </el-dialog>
 </template>
 

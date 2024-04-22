@@ -63,67 +63,65 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <el-dialog v-model="props.visible" @close="handleClose" title="编辑" width="500" align-center>
-        <el-form :model="factoryInfo" :rules="formRules" ref="formRef">
-            <el-row :gutter="8">
-                <el-col :span="16">
-                    <el-form-item prop="name" label="水厂名">
-                        <el-input v-model="factoryInfo.name" placeholder="水厂名" clearable />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item prop="district" label="所属地区">
-                        <el-input v-model="factoryInfo.district" placeholder="所属地区" clearable />
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row :gutter="8">
-                <el-col :span="8">
-                    <el-form-item prop="month" label="时间">
-                        <el-input v-model="factoryInfo.month" placeholder="时间" clearable />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item prop="free_chlorine" label="游离氯">
-                        <el-input v-model="factoryInfo.free_chlorine" placeholder="游离氯" clearable />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item prop="ph_value" label="ph值">
-                        <el-input v-model="factoryInfo.ph_value" placeholder="ph值" clearable />
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row :gutter="8">
-                <el-col :span="8">
-                    <el-form-item prop="turbidity" label="浑浊度">
-                        <el-input v-model="factoryInfo.turbidity" placeholder="浑浊度" clearable />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item prop="platinum_cobalt_color" label="铂钴色度">
-                        <el-input v-model="factoryInfo.platinum_cobalt_color" placeholder="铂钴色度" clearable />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item prop="total_coliform" label="总大肠菌群">
-                        <el-input v-model="factoryInfo.total_coliform" placeholder="总大肠菌群" clearable />
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row :gutter="8">
-                <el-col :span="8">
-                    <el-form-item prop="total_bacteria" label="菌落总数">
-                        <el-input v-model="factoryInfo.total_bacteria" placeholder="菌落总数" clearable />
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row justify="end">
-                <el-form-item>
-                    <el-button type="primary">确认</el-button>
-                </el-form-item>
-            </el-row>
-        </el-form>
+    <el-dialog v-model="props.visible" @close="handleClose" title="编辑" width="550" align-center>
+        <el-card style="margin-bottom: 12px;" shadow="hover">
+            <el-form :model="factoryInfo" :rules="formRules" ref="formRef">
+                <el-row :gutter="8">
+                    <el-col :span="16">
+                        <el-form-item prop="name" label="水厂名">
+                            <el-input v-model="factoryInfo.name" placeholder="水厂名" clearable />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item prop="district" label="所属地区">
+                            <el-input v-model="factoryInfo.district" placeholder="所属地区" clearable />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="8">
+                    <el-col :span="8">
+                        <el-form-item prop="month" label="时间">
+                            <el-input v-model="factoryInfo.month" placeholder="时间" clearable />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item prop="free_chlorine" label="游离氯">
+                            <el-input v-model="factoryInfo.free_chlorine" placeholder="游离氯" clearable />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item prop="ph_value" label="ph值">
+                            <el-input v-model="factoryInfo.ph_value" placeholder="ph值" clearable />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="8">
+                    <el-col :span="8">
+                        <el-form-item prop="turbidity" label="浑浊度">
+                            <el-input v-model="factoryInfo.turbidity" placeholder="浑浊度" clearable />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item prop="platinum_cobalt_color" label="铂钴色度">
+                            <el-input v-model="factoryInfo.platinum_cobalt_color" placeholder="铂钴色度" clearable />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item prop="total_coliform" label="总大肠菌群">
+                            <el-input v-model="factoryInfo.total_coliform" placeholder="总大肠菌群" clearable />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row style="height: 32px;" :gutter="8">
+                    <el-col :span="8">
+                        <el-form-item prop="total_bacteria" label="菌落总数">
+                            <el-input v-model="factoryInfo.total_bacteria" placeholder="菌落总数" clearable />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+        </el-card>
+        <el-button style="float: right;"type="primary">确认</el-button>
     </el-dialog>
 </template>
 

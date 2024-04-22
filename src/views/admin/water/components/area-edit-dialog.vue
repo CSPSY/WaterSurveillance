@@ -42,49 +42,51 @@ const formRules = {
 </script>
 
 <template>
-    <el-dialog v-model="props.visible" @close="handleClose" width="500" align-center>
+    <el-dialog v-model="props.visible" @close="handleClose" width="550" align-center>
         <template #header>
             <div class="my-header">
                 <span class="word">{{ props.data.district }}</span>
                 <span class="number">{{ props.data.month }}</span>
             </div>
         </template>
-        <el-form :model="areaInfo" :rules="formRules" ref="formRef">
-            <el-row class="item" :gutter="8">
-                <el-col :span="8">
-                    <el-form-item prop="free_chlorine" label="游离氯">
-                        <el-input v-model="areaInfo.free_chlorine" placeholder="游离氯" clearable :readonly="true" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item prop="ph_value" label="ph值">
-                        <el-input v-model="areaInfo.ph_value" placeholder="ph值" clearable :readonly="true" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item prop="turbidity" label="浑浊度">
-                        <el-input v-model="areaInfo.turbidity" placeholder="浑浊度" clearable :readonly="true" />
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row :gutter="8">
-                <el-col :span="8">
-                    <el-form-item prop="platinum_cobalt_color" label="铂钴色度">
-                        <el-input v-model="areaInfo.platinum_cobalt_color" placeholder="铂钴色度" clearable :readonly="true" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item prop="total_coliform" label="总大肠菌群">
-                        <el-input v-model="areaInfo.total_coliform" placeholder="总大肠菌群" clearable :readonly="true" />
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item prop="total_bacteria" label="菌落总数">
-                        <el-input v-model="areaInfo.total_bacteria" placeholder="菌落总数" clearable :readonly="true" />
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
+        <el-card shadow="hover">
+            <el-form :model="areaInfo" :rules="formRules" ref="formRef">
+                <el-row class="item" :gutter="8">
+                    <el-col :span="8">
+                        <el-form-item prop="free_chlorine" label="游离氯">
+                            <el-input v-model="areaInfo.free_chlorine" placeholder="游离氯" clearable :readonly="true" />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item prop="ph_value" label="ph值">
+                            <el-input v-model="areaInfo.ph_value" placeholder="ph值" clearable :readonly="true" />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item prop="turbidity" label="浑浊度">
+                            <el-input v-model="areaInfo.turbidity" placeholder="浑浊度" clearable :readonly="true" />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row style="height: 32px;":gutter="8">
+                    <el-col :span="8">
+                        <el-form-item prop="platinum_cobalt_color" label="铂钴色度">
+                            <el-input v-model="areaInfo.platinum_cobalt_color" placeholder="铂钴色度" clearable :readonly="true" />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item prop="total_coliform" label="总大肠菌群">
+                            <el-input v-model="areaInfo.total_coliform" placeholder="总大肠菌群" clearable :readonly="true" />
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item prop="total_bacteria" label="菌落总数">
+                            <el-input v-model="areaInfo.total_bacteria" placeholder="菌落总数" clearable :readonly="true" />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+        </el-card>
     </el-dialog>
 </template>
 
