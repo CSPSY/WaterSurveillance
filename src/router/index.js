@@ -96,7 +96,7 @@ router.beforeEach(async (to, from) => {
                 ...res.data?.data?.user
             });
         }).catch(err => {
-            ElMessage.error(err.message);
+            // ElMessage.error(err.message);
         });
     }
     if (to.meta.needAuth && !userStore.isLogin) {

@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user', () => {
         telephone: '',
         username: '',
         realname: '',
-        role: '',
+        role: 1,
     });
 
     const login = (data) => {
@@ -32,7 +32,7 @@ export const useUserStore = defineStore('user', () => {
         userInfo.telephone = '';
         userInfo.username = '';
         userInfo.realname = '';
-        userInfo.role = '';
+        userInfo.role = 1;
         isLogin.value = false;
         localStorage.removeItem('WSV_TOKEN');
     };

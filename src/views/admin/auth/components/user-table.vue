@@ -1,7 +1,9 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useUserList } from '@/hooks/useUserList.js';
 import { userRole } from '@/utils/user.js';
+import UserEditDialog from './user-edit-dialog.vue';
+import { useGlobalStore } from '@/stores/store';
 
 defineOptions({
     name: 'UserTable'
@@ -12,12 +14,32 @@ const {
     refreshUserList, onPageChange, handleSearch,
 } = useUserList();
 
+const { userStore } = useGlobalStore();
+
+const actionText = ref('编辑');
+const showFlag = ref(false);
+
 onMounted(() => {
+    actionText.value = userStore.userInfo.role === 0 ? '编辑' : '查看';
+    showFlag.value = userStore.userInfo.role === 0 ? true : false;
     refreshUserList();
 });
 
 const formatterRole = (row) => {
     return userRole[row.role];
+};
+
+const editDialogVisible = ref(false);
+const editDialogData = ref(null);
+
+// 编辑框显示
+const showEditDialog = (data) => {
+    editDialogData.value = data;
+    editDialogVisible.value = true;
+};
+
+const closeEditDialog = () => {
+    editDialogVisible.value = false;
 };
 </script>
 
@@ -27,7 +49,7 @@ const formatterRole = (row) => {
             <label for="account-info">用户名：</label>
             <el-input id="account-info" class="search-input" v-model="userSearchText" placeholder="请输入用户名" />
             <el-button class="button" @click="handleSearch">搜索</el-button>
-            <el-button class="button" @click="">添加用户</el-button>
+            <el-button v-show="showFlag" class="button" @click="">添加用户</el-button>
         </div>
         <div class="main-bottom">
             <el-table :data="userData" :border="true" style="width: 1080px; margin-bottom: 12px;">
@@ -39,10 +61,10 @@ const formatterRole = (row) => {
                 <el-table-column property="email" label="邮箱" width="280" />
                 <el-table-column label="操作" width="120">
                     <template v-slot="scope" #default>
-                    <el-button link type="primary" size="small" @click="editUserCard(scope.row)">编辑</el-button>
+                    <el-button link type="primary" size="small" @click="showEditDialog(scope.row)">{{ actionText }}</el-button>
                     <el-popconfirm title="确认要删除该用户吗 ？" @confirm="deleteUserById(scope.row.id)">
                         <template #reference>
-                            <el-button link type="danger" size="small" @click="">删除</el-button>
+                            <el-button v-show="showFlag" link type="danger" size="small" @click="">删除</el-button>
                         </template>
                     </el-popconfirm>
                     </template>
@@ -55,6 +77,7 @@ const formatterRole = (row) => {
                 v-model:current-page="userPagination.current"
                 @current-change="onPageChange"
             />
+            <user-edit-dialog v-if="editDialogVisible" :isEdit="showFlag" :visible="editDialogVisible" :data="editDialogData" @close="closeEditDialog" />
         </div>
     </div>
 </template>
