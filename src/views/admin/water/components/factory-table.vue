@@ -4,7 +4,7 @@ import { useFactoryWaterList } from '@/hooks/useFactoryWaterList.js';
 import FactoryEditDialog from './factory-edit-dialog.vue';
 
 const {
-    factoryList: factoryData, factoryPagination, factorySearchText,
+    factoryList: factoryData, factoryPagination, factorySearchText, districtSearchText, factorySearchMonth,
     refreshFactoryList, onPageChange, handleSearch,
 } = useFactoryWaterList();
 
@@ -28,13 +28,43 @@ const showEditDialog = (data) => {
 const closeEditDialog = () => {
     editDialogVisible.value = false;
 };
+
+const shortcuts = [
+    {
+        text: '这个月',
+        value: [new Date(), new Date()],
+    },
+    {
+        text: '今年',
+        value: () => {
+            const end = new Date();
+            const start = new Date(new Date().getFullYear(), 0);
+            return [start, end];
+        },
+    },
+    {
+        text: '最近六个月',
+        value: () => {
+            const end = new Date();
+            const start = new Date();
+            start.setMonth(start.getMonth() - 6);
+            return [start, end];
+        },
+    },
+];
 </script>
 
 <template>
     <div class="factory-table">
         <div class="table-top">
             <label for="account-info">水厂名：</label>
-            <el-input id="account-info" class="search-input" v-model="factorySearchText" placeholder="请输入水厂名" />
+            <el-input id="account-info" class="search-input" v-model="factorySearchText" placeholder="水厂名" />
+            <label for="account-info">所属地区：</label>
+            <el-input id="account-info" class="search-input" v-model="districtSearchText" placeholder="所属地区" />
+            <el-date-picker
+                v-model="factorySearchMonth" type="monthrange" unlink-panels format="YYYY-MM"
+                range-separator="-" start-placeholder="开始月份" end-placeholder="结束月份" :shortcuts="shortcuts"
+            />
             <el-button class="button" @click="handleSearch">搜索</el-button>
         </div>
         <div class="table-bottom">
@@ -84,6 +114,9 @@ const closeEditDialog = () => {
     height: 32px;
     width: 212px;
     padding: 0 22px 0 0;
+}
+.button {
+    margin-left: 22px;
 }
 .button:focus:not(.button:hover) {
   background-color: var(--el-button-bg-color);

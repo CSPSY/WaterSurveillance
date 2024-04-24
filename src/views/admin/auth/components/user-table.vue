@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useUserList } from '@/hooks/useUserList.js';
 import { userRole } from '@/utils/user.js';
 import UserEditDialog from './user-edit-dialog.vue';
+import UserCreateDialog from './user-create-dialog.vue';
 import { useGlobalStore } from '@/stores/store';
 
 defineOptions({
@@ -29,10 +30,9 @@ const formatterRole = (row) => {
     return userRole[row.role];
 };
 
+// 编辑用户信息
 const editDialogVisible = ref(false);
 const editDialogData = ref(null);
-
-// 编辑框显示
 const showEditDialog = (data) => {
     editDialogData.value = data;
     editDialogVisible.value = true;
@@ -40,6 +40,16 @@ const showEditDialog = (data) => {
 
 const closeEditDialog = () => {
     editDialogVisible.value = false;
+};
+
+// 新增用户
+const createDialogVisible = ref(false);
+const showCreateDialog = () => {
+    createDialogVisible.value = true;
+};
+
+const closeCreateDialog = () => {
+    createDialogVisible.value = false;
 };
 </script>
 
@@ -49,7 +59,7 @@ const closeEditDialog = () => {
             <label for="account-info">用户名：</label>
             <el-input id="account-info" class="search-input" v-model="userSearchText" placeholder="请输入用户名" />
             <el-button class="button" @click="handleSearch">搜索</el-button>
-            <el-button v-show="showFlag" class="button" @click="">添加用户</el-button>
+            <el-button v-show="showFlag" class="button" @click="showCreateDialog">添加用户</el-button>
         </div>
         <div class="main-bottom">
             <el-table :data="userData" :border="true" style="width: 1080px; margin-bottom: 12px;">
@@ -78,6 +88,7 @@ const closeEditDialog = () => {
                 @current-change="onPageChange"
             />
             <user-edit-dialog v-if="editDialogVisible" :isEdit="showFlag" :visible="editDialogVisible" :data="editDialogData" @close="closeEditDialog" />
+            <user-create-dialog v-if="createDialogVisible" :visible="createDialogVisible" @close="closeCreateDialog" />
         </div>
     </div>
 </template>

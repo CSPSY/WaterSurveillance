@@ -12,18 +12,18 @@ export const getWaterDataFactory = (params) => {
     return API.get('/water/data/factory', { params });
 };
 
-export const getWaterAreaList = (page, size, search) => {
+export const getWaterAreaList = (page, size, search, startTime, endTime) => {
     return API.get('/water/area-list', {
         params: {
-            page, size, search
+            page, size, search, startTime, endTime
         }
     });
 };
 
-export const getWaterFactoryList = (page, size, search) => {
+export const getWaterFactoryList = (page, size, factoryName, districtName, startTime, endTime) => {
     return API.get('/water/factory-list', {
         params: {
-            page, size, search
+            page, size, factoryName, districtName, startTime, endTime
         }
     });
 };
