@@ -1,12 +1,15 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useFactoryWaterList } from '@/hooks/useFactoryWaterList.js';
+import { useAreaWaterList } from '@/hooks/useAreaWaterList.js';
 import FactoryEditDialog from './factory-edit-dialog.vue';
+import { deleteWaterFactoryInfo } from '@/api/water';
 
 const {
     factoryList: factoryData, factoryPagination, factorySearchText, districtSearchText, factorySearchMonth,
     refreshFactoryList, onPageChange, handleSearch,
 } = useFactoryWaterList();
+const { refreshAreaList } = useAreaWaterList();
 
 defineOptions({
     name: 'FactoryTable'
@@ -52,6 +55,19 @@ const shortcuts = [
         },
     },
 ];
+
+const deleteWaterInfo = (id) => {
+    deleteWaterFactoryInfo(id).then((res) => {
+        if (res.data.data.code !== 0) {
+            throw new Error(res.data.data.message);
+        }
+        ElMessage({ message: res.data.data.message, type: 'success' });
+        refreshFactoryList();
+        refreshAreaList();
+    }).catch((err) => {
+        ElMessage.error(err.message);
+    });
+};
 </script>
 
 <template>
@@ -81,9 +97,9 @@ const shortcuts = [
             <el-table-column label="操作" width="120">
                 <template v-slot="scope" #default>
                     <el-button link type="primary" size="small" @click="showEditDialog(scope.row)">编辑</el-button>
-                    <el-popconfirm title="确认要删除该用户吗 ？" @confirm="deleteUserById(scope.row.id)">
+                    <el-popconfirm title="确认要删除该条水样信息吗 ？" @confirm="deleteWaterInfo(scope.row.id)">
                         <template #reference>
-                            <el-button link type="danger" size="small" @click="">删除</el-button>
+                            <el-button link type="danger" size="small">删除</el-button>
                         </template>
                     </el-popconfirm>
                 </template>

@@ -1,5 +1,8 @@
 <script setup>
 import { onMounted, ref, reactive, onUnmounted } from 'vue';
+import { editWaterFactoryInfo } from '@/api/water';
+import { useFactoryWaterList } from '@/hooks/useFactoryWaterList.js';
+import { useAreaWaterList } from '@/hooks/useAreaWaterList.js';
 
 defineOptions({
     name: 'FactoryEditDialog'
@@ -8,11 +11,15 @@ defineOptions({
 const props = defineProps(['visible', 'data']);
 const emit = defineEmits(['close']);
 
+const { refreshFactoryList } = useFactoryWaterList();
+const { refreshAreaList } = useAreaWaterList();
+
 const handleClose = () => {
     emit('close');
 };
 
 const factoryInfo = reactive({
+    id: 0,
     name: '',
     district: '',
     month: '',
@@ -25,6 +32,7 @@ const factoryInfo = reactive({
 });
 
 onMounted(() => {
+    factoryInfo.id = props.data.id;
     factoryInfo.name = props.data.name;
     factoryInfo.district = props.data.district;
     factoryInfo.month = props.data.month;
@@ -50,6 +58,7 @@ const formRules = {
 };
 
 onUnmounted(() => {
+    factoryInfo.id = 0;
     factoryInfo.name = '';
     factoryInfo.district = '';
     factoryInfo.month = '';
@@ -60,6 +69,20 @@ onUnmounted(() => {
     factoryInfo.total_coliform = '';
     factoryInfo.total_bacteria = '';
 });
+
+const confirm = () => {
+    editWaterFactoryInfo(factoryInfo).then(res => {
+        if (res.data.data.code !== 0) {
+            throw new Error(res.data.data.message);
+        }
+        ElMessage({ message: res.data.data.message, type: 'success' });
+        refreshFactoryList();
+        refreshAreaList();
+        handleClose();
+    }).catch(err => {
+        ElMessage.error(err.message);
+    });
+};
 </script>
 
 <template>
@@ -121,7 +144,7 @@ onUnmounted(() => {
                 </el-row>
             </el-form>
         </el-card>
-        <el-button style="float: right;"type="primary">确认</el-button>
+        <el-button style="float: right;"type="primary" @click="confirm">确认</el-button>
     </el-dialog>
 </template>
 

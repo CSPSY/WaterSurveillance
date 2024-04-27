@@ -49,14 +49,14 @@ const handleLogin = async () => {
     <el-card shadow="hover">
         <el-form :model="loginInfo" :rules="formRules" ref="formRef" label-position="top">
             <el-form-item class="item" prop="email" label-width="100px">
-                <el-input v-model="loginInfo.email" placeholder=" 邮箱" clearable>
+                <el-input type="text" id="wsv-email" autocomplete="email" v-model="loginInfo.email" placeholder=" 邮箱" clearable>
                     <template #prefix>
                         <el-icon><Cellphone /></el-icon>
                     </template>
                 </el-input>
             </el-form-item>
             <el-form-item class="item" prop="password">
-                <el-input type="password" v-model="loginInfo.password" placeholder=" 密码" show-password>
+                <el-input type="password" id="password" autocomplete="current-password" v-model="loginInfo.password" placeholder=" 密码" show-password>
                     <template #prefix>
                         <el-icon class="el-input__icon"><Key /></el-icon>
                     </template>
