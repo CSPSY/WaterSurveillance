@@ -1,15 +1,14 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useFactoryWaterList } from '@/hooks/useFactoryWaterList.js';
-import { useAreaWaterList } from '@/hooks/useAreaWaterList.js';
 import FactoryEditDialog from './factory-edit-dialog.vue';
+import FactoryCreateDialog from './factory-create-dialog.vue';
 import { deleteWaterFactoryInfo } from '@/api/water';
 
 const {
     factoryList: factoryData, factoryPagination, factorySearchText, districtSearchText, factorySearchMonth,
     refreshFactoryList, onPageChange, handleSearch,
 } = useFactoryWaterList();
-const { refreshAreaList } = useAreaWaterList();
 
 defineOptions({
     name: 'FactoryTable'
@@ -63,10 +62,21 @@ const deleteWaterInfo = (id) => {
         }
         ElMessage({ message: res.data.data.message, type: 'success' });
         refreshFactoryList();
-        refreshAreaList();
     }).catch((err) => {
         ElMessage.error(err.message);
     });
+};
+
+const refreshTableList = () => {
+    refreshFactoryList();
+};
+
+const createDialogVisible = ref(false);
+const showCreateDialog = () => {
+    createDialogVisible.value = true;
+};
+const closeCreateDialog = () => {
+    createDialogVisible.value = false;
 };
 </script>
 
@@ -82,6 +92,7 @@ const deleteWaterInfo = (id) => {
                 range-separator="-" start-placeholder="开始月份" end-placeholder="结束月份" :shortcuts="shortcuts"
             />
             <el-button class="button" @click="handleSearch">搜索</el-button>
+            <el-button class="button" @click="showCreateDialog">添加</el-button>
         </div>
         <div class="table-bottom">
             <el-table :data="factoryData" :border="true" style="width: 1310px; margin-bottom: 12px;">
@@ -112,14 +123,21 @@ const deleteWaterInfo = (id) => {
                 v-model:current-page="factoryPagination.current"
                 @current-change="onPageChange"
             />
-            <factory-edit-dialog v-if="editDialogVisible" :visible="editDialogVisible" :data="editDialogData" @close="closeEditDialog" />
+            <factory-edit-dialog
+                v-if="editDialogVisible" :visible="editDialogVisible" :data="editDialogData"
+                @close="closeEditDialog" @refresh="refreshTableList"
+            />
+            <factory-create-dialog
+                v-if="createDialogVisible" :visible="createDialogVisible"
+                @close="closeCreateDialog" @refresh="refreshTableList"
+            />
         </div>
     </div>
 </template>
 
 <style scoped>
 .table-top {
-  margin: 25px 0 0 55px;
+  margin: 5px 0 0 55px;
   
   align-items: center;
 }

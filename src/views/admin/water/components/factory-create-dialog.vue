@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted, ref, reactive, onUnmounted } from 'vue';
-import { editWaterFactoryInfo } from '@/api/water';
+import { createWaterFactoryInfo } from '@/api/water';
 
 defineOptions({
-    name: 'FactoryEditDialog'
+    name: 'FactoryCreateDialog'
 });
 
 const props = defineProps(['visible', 'data']);
@@ -14,7 +14,6 @@ const handleClose = () => {
 };
 
 const factoryInfo = reactive({
-    id: 0,
     name: '',
     district: '',
     month: '',
@@ -27,33 +26,6 @@ const factoryInfo = reactive({
 });
 
 onMounted(() => {
-    factoryInfo.id = props.data.id;
-    factoryInfo.name = props.data.name;
-    factoryInfo.district = props.data.district;
-    factoryInfo.month = props.data.month;
-    factoryInfo.free_chlorine = props.data.free_chlorine;
-    factoryInfo.ph_value = props.data.ph_value;
-    factoryInfo.turbidity = props.data.turbidity;
-    factoryInfo.platinum_cobalt_color = props.data.platinum_cobalt_color;
-    factoryInfo.total_coliform = props.data.total_coliform;
-    factoryInfo.total_bacteria = props.data.total_bacteria;
-});
-
-const formRef = ref(null);
-const formRules = {
-    name: [{ required: true, message: '请输入水厂名', trigger: 'blur' }],
-    district: [{ required: true, message: '请输入所属地区', trigger: 'blur' }],
-    month: [{ required: true, message: '请输入时间', trigger: 'blur' }],
-    free_chlorine: [{ required: true, message: '请输入游离氯', trigger: 'blur' }],
-    ph_value: [{ required: true, message: '请输入ph值', trigger: 'blur' }],
-    turbidity: [{ required: true, message: '请输入浑浊度', trigger: 'blur' }],
-    platinum_cobalt_color: [{ required: true, message: '请输入铂钴色度', trigger: 'blur' }],
-    total_coliform: [{ required: true, message: '请输入总大肠菌群', trigger: 'blur' }],
-    total_bacteria: [{ required: true, message: '请输入菌落总数', trigger: 'blur' }],
-};
-
-onUnmounted(() => {
-    factoryInfo.id = 0;
     factoryInfo.name = '';
     factoryInfo.district = '';
     factoryInfo.month = '';
@@ -65,25 +37,64 @@ onUnmounted(() => {
     factoryInfo.total_bacteria = '';
 });
 
-const confirm = () => {
-    for (let item in factoryInfo) {
-        if (!factoryInfo[item]) { factoryInfo[item] = 0; } ;
-    }
-    editWaterFactoryInfo(factoryInfo).then(res => {
-        if (res.data.errno === -1) {
-            throw new Error(res.data.message);
+const formRef = ref(null);
+const formRules = {
+    name: [{ required: true, message: '请输入水厂名', trigger: 'blur' }],
+    district: [{ required: true, message: '请输入所属地区', trigger: 'blur' }],
+    month: [{ required: true, message: '请输入时间', trigger: 'blur' }],
+    free_chlorine: [{ required: false, message: '请输入游离氯', trigger: 'blur' }],
+    ph_value: [{ required: false, message: '请输入ph值', trigger: 'blur' }],
+    turbidity: [{ required: false, message: '请输入浑浊度', trigger: 'blur' }],
+    platinum_cobalt_color: [{ required: false, message: '请输入铂钴色度', trigger: 'blur' }],
+    total_coliform: [{ required: false, message: '请输入总大肠菌群', trigger: 'blur' }],
+    total_bacteria: [{ required: false, message: '请输入菌落总数', trigger: 'blur' }],
+};
+
+onUnmounted(() => {
+    factoryInfo.name = '';
+    factoryInfo.district = '';
+    factoryInfo.month = '';
+    factoryInfo.free_chlorine = '';
+    factoryInfo.ph_value = '';
+    factoryInfo.turbidity = '';
+    factoryInfo.platinum_cobalt_color = '';
+    factoryInfo.total_coliform = '';
+    factoryInfo.total_bacteria = '';
+});
+
+const confirm = async () => {
+    if (!formRef.value) { return; }
+    const isValid = await formRef.value.validate();
+
+    if (isValid) {
+        const time = { year: '', month: '' };
+        time.year = factoryInfo.month.getFullYear();
+        time.month = factoryInfo.month.getMonth()+1;
+        if (time.month < 10) { time.month = '0' + time.month; }
+
+        factoryInfo.month = time.year + '-' + time.month;
+        for (let item in factoryInfo) {
+            console.log(factoryInfo[item])
+            if (!factoryInfo[item]) { factoryInfo[item] = 0; } ;
         }
-        ElMessage({ message: res.data.data.message, type: 'success' });
-        emit('refresh');
-        handleClose();
-    }).catch(err => {
-        ElMessage.error(err.message);
-    });
+        createWaterFactoryInfo(factoryInfo).then(res => {
+            if (res.data.errno === -1) {
+                throw new Error(res.data.message);
+            }
+            ElMessage({ message: res.data.data.message, type: 'success' });
+            emit('refresh');
+            handleClose();
+        }).catch(err => {
+            ElMessage.error(err.message);
+        });
+    } else {
+        ElMessage.error('请填写检查信息');
+    }
 };
 </script>
 
 <template>
-    <el-dialog v-model="props.visible" @close="handleClose" title="编辑" width="550" align-center>
+    <el-dialog v-model="props.visible" @close="handleClose" title="添加" width="550" align-center>
         <el-card style="margin-bottom: 12px;" shadow="hover">
             <el-form :model="factoryInfo" :rules="formRules" ref="formRef">
                 <el-row :gutter="8">
@@ -101,7 +112,8 @@ const confirm = () => {
                 <el-row :gutter="8">
                     <el-col :span="8">
                         <el-form-item prop="month" label="时间">
-                            <el-input v-model="factoryInfo.month" placeholder="时间" clearable />
+                            <!-- <el-input v-model="factoryInfo.month" placeholder="时间" clearable /> -->
+                            <el-date-picker v-model="factoryInfo.month" type="month" placeholder="选择时间" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">

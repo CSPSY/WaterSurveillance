@@ -40,3 +40,7 @@ export const deleteWaterFactoryInfo = (id) => {
 export const editWaterFactoryInfo = (data) => {
     return API.put(`/water/factory/${data.id}`, data);
 };
+
+export const createWaterFactoryInfo = (data) => {
+    return API.post(`/water/factory/info`, data);
+};
