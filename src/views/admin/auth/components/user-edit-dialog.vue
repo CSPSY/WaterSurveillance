@@ -6,7 +6,7 @@ defineOptions({
 });
 
 const props = defineProps(['visible', 'data', 'isEdit']);
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'confirm']);
 
 const handleClose = () => {
     emit('close');
@@ -57,6 +57,10 @@ onUnmounted(() => {
     userInfo.telephone = '';
     userInfo.email = '';
 });
+
+const handleConfirm = () => {
+    emit('confirm', userInfo);
+};
 </script>
 
 <template>
@@ -97,7 +101,7 @@ onUnmounted(() => {
                 </el-row>
             </el-form>
         </el-card>
-        <el-button style="float: right;" type="primary">确认</el-button>
+        <el-button style="float: right;" type="primary" @click="handleConfirm">确认</el-button>
     </el-dialog>
 </template>
 

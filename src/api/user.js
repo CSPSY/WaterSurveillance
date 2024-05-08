@@ -21,3 +21,8 @@ export const loginAdmin = (postObj) => {
 export const getUserInfo = () => {
     return API.get('/user/info');
 };
+
+// 编辑用户信息
+export const editUserInfo = (data) => {
+    return API.put(`/user/${data.id}`, data);
+}

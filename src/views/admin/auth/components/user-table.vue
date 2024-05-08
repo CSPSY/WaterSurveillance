@@ -5,6 +5,7 @@ import { userRole } from '@/utils/user.js';
 import UserEditDialog from './user-edit-dialog.vue';
 import UserCreateDialog from './user-create-dialog.vue';
 import { useGlobalStore } from '@/stores/store';
+import { editUserInfo } from '@/api/user.js';
 
 defineOptions({
     name: 'UserTable'
@@ -51,6 +52,21 @@ const showCreateDialog = () => {
 const closeCreateDialog = () => {
     createDialogVisible.value = false;
 };
+
+const confirmEditInfo = (data) => {
+    editUserInfo(data).then(res => {
+        console.log(res)
+        if (res.data.errno === 0) {
+            refreshUserList();
+            editDialogVisible.value = false;
+            ElMessage({ type: 'success', message: res.data.data.message });
+        } else {
+            ElMessage.error(res.data.message);
+        }
+    }).catch(err => {
+        ElMessage.error(err.message);
+    })
+};
 </script>
 
 <template>
@@ -87,7 +103,7 @@ const closeCreateDialog = () => {
                 v-model:current-page="userPagination.current"
                 @current-change="onPageChange"
             />
-            <user-edit-dialog v-if="editDialogVisible" :isEdit="showFlag" :visible="editDialogVisible" :data="editDialogData" @close="closeEditDialog" />
+            <user-edit-dialog v-if="editDialogVisible" :isEdit="showFlag" :visible="editDialogVisible" :data="editDialogData" @close="closeEditDialog" @confirm="confirmEditInfo" />
             <user-create-dialog v-if="createDialogVisible" :visible="createDialogVisible" @close="closeCreateDialog" />
         </div>
     </div>
