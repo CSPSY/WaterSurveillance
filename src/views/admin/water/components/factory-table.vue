@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useFactoryWaterList } from '@/hooks/useFactoryWaterList.js';
 import FactoryEditDialog from './factory-edit-dialog.vue';
 import FactoryCreateDialog from './factory-create-dialog.vue';
+import UploadDialog from './upload-dialog.vue';
 import { deleteWaterFactoryInfo } from '@/api/water';
 
 const {
@@ -78,6 +79,14 @@ const showCreateDialog = () => {
 const closeCreateDialog = () => {
     createDialogVisible.value = false;
 };
+
+const uploadDialogVisible = ref(false);
+const showUploadDialog = () => {
+    uploadDialogVisible.value = true;
+};
+const closeUploadDialog = () => {
+    uploadDialogVisible.value = false;
+};
 </script>
 
 <template>
@@ -93,6 +102,7 @@ const closeCreateDialog = () => {
             />
             <el-button class="button" @click="handleSearch">搜索</el-button>
             <el-button class="button" @click="showCreateDialog">添加</el-button>
+            <el-button class="button" style="margin-left: 5px;" @click="showUploadDialog">批量添加</el-button>
         </div>
         <div class="table-bottom">
             <el-table :data="factoryData" :border="true" style="width: 1310px; margin-bottom: 12px;">
@@ -130,6 +140,10 @@ const closeCreateDialog = () => {
             <factory-create-dialog
                 v-if="createDialogVisible" :visible="createDialogVisible"
                 @close="closeCreateDialog" @refresh="refreshTableList"
+            />
+            <upload-dialog
+                v-if="uploadDialogVisible" :visible="uploadDialogVisible"
+                @close="closeUploadDialog" @refresh="refreshTableList"
             />
         </div>
     </div>
